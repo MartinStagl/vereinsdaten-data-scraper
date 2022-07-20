@@ -1,21 +1,51 @@
 # vereinsdaten-data-scraper
 
+
 [GERMAN BELOW / DEUTSCH UNTEN]
+
 ## Description
 This project allows you to scrape match data from the ÖFB federation homepages. Initially it is build uppon the BFV site but later support for the other sites will be added.
 
-## Requirements
+Different methods will be available to scrape the data all following the FAIR use principle. The data can be scraped directly parsing the returned HTML information from GET requests. 
 
+The links to the sites to be scraped will be crawled.
+
+All data and metadata shall be stored in a relational database like Postgres or MariaDB.
+
+## Design
+- Database: 
+  - Tables for Analysis
+    - TEAMS Table (Which Team in which year which league)
+    - PLAYER Table (which Player which game which date)
+    - GAME Table (which score, which additional game data
+  - Tables with additional data
+    - Scrape Meta Data Table (stores information about the scraping)
+    
+- Link Crawler
+  - Get links to games
+  
+- Scraper
+  - HTML Parsing with beautiful soap
 
 ## Usage
 
-
+  - Create Database and Load Schema
+  - Write Credentials into db.properties file
+  - Install requirements.txt
+  - Start main.py
 ---
 
 ## Beschreibung
+Durch diesen Code kann man Match, Vereins und Spieler Daten von den Homepages des ÖFB und den Verbänden der einzelnen Bundesländer downloaden und in eine Datenbank zur Analyse speichern. Als erstes wird nur das Speichern von Daten vom BFV programmiert, aber später sollen auch die anderen Verbände abgefragt werden.
 
+Dabei sollen unterschiedliche Abfragemethoden unterstützt werden, welche aber alle den FAIR Prinzipien folgen sollen. Als erstes wird das direkte Scrapen und Parsen von HTML Daten unterstützt. 
 
-## Voraussetzungen
+Die Links zu den Seiten soll ein Crawler finden.
+
+Alle Daten sollen in einer relationalen Datenbank gespeichert werden.
+
+## Design
+
 
 
 ## Verwendung
@@ -23,5 +53,5 @@ This project allows you to scrape match data from the ÖFB federation homepages.
 
 ---
 
-### Contact me
+### Contact me / Kontaktiere mich
 
