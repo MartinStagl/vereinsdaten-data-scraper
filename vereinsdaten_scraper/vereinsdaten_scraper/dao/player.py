@@ -7,6 +7,9 @@ engine = create_engine('sqlite:///verbands.db', echo=True)
 # Test it
 with Session(bind=engine) as session:
 
+    m = Match()
+    session.add(m)
+
     # add users
     usr1 = Player(name="bob")
     session.add(usr1)

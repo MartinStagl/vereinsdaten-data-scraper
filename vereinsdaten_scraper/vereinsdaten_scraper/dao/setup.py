@@ -49,8 +49,12 @@ class Match(Base):
     league=Column(String,nullable=True)
     round = Column(Integer,nullable=True)
     result= Column(Integer,nullable=True)
-    team=Column(Integer, ForeignKey('teams.id'))
-    home_team=Column(Boolean,nullable=True)
+
+    away_team_id=Column(Integer, ForeignKey('teams.id'))
+    home_team_id=Column(Integer, ForeignKey('teams.id'))
+
+    #away_team = relationship('Team', ForeignKey('matches.away_team_id'))
+    #home_team = relationship('Team', ForeignKey('matches.home_team_id'))
     players = relationship('MatchPlayer', back_populates='match')
 
 class Team(Base):
@@ -58,6 +62,9 @@ class Team(Base):
    id = Column(Integer, primary_key=True)
    name = Column(String)
    year = Column(Integer)
+   away_matches = relationship('Match',  primaryjoin="Match.away_team_id==Team.id")
+   home_matches = relationship('Match',  primaryjoin="Match.home_team_id==Team.id")
+
    players = relationship('Player', secondary='teams_players', back_populates='teams')
 
 
