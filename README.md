@@ -46,12 +46,21 @@ Alle Daten sollen in einer relationalen Datenbank gespeichert werden.
 
 ## Design
 
-
+wget https://github.com/mozilla/geckodriver/releases/download/v0.31.0/geckodriver-v0.31.0-linux64.tar.gz
+tar -xvzf geckodriver-v0.31.0-linux64.tar.gz
+chmod +x geckodriver
+sudo mv geckodriver /usr/local/bin/
+export PATH=$PATH:/usr/local/bin/geckodriver
+pip install selenium webdriver-manager
+https://medium.com/@stefan.preusler/selenium-firefox-in-python-auf-einem-ubuntu-server-df4abc818853
 
 ## Verwendung
 
+setup:
 
 ---
 
 ### Contact me / Kontaktiere mich
+
+
 
