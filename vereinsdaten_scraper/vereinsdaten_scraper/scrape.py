@@ -62,14 +62,30 @@ def to_database(data):
 
 
 if __name__ == "__main__":
-    start_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/BFV-2KL-2N/Spielplan/aktuell/2022"
+    #start_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/BFV-2KL-2N/Spielplan/aktuell/{}"
+    base_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/{}/Spielplan/aktuell/{}"
+    leagues=["BFV-Regionalligen-RegionalligaOst",
+            "BFV-BVZBurgenlandliga-BVZBurgenlandliga","BFV-BL-BurgenlandligaReserve",
+          "BFV-IILigen-IILigaNord","BFV-IILiga-IILigaMitte","BFV-IILigen-IILigaSued",
+            "BFV-IILiga-IILigaNordReserve","BFV-IILiga-IILigaMitteReserve","BFV-IILiga-IILigaSuedReserve",
+          "BFV-1Klassen-1KlasseNord/Spielplan","BFV-1Klasse-1Mitte","BFV-1Klassen-1KlasseSuedB",
+            "BFV-1KL-1KlasseNordReserve","BFV-1KL-1KlasseMitteReserve","BFV-1KL-1KlasseSuedReserve"
+          "BFV-2KL-2N","BFV-2Klassen-2KlasseMitte","BFV-2Klasse-2KlasseSuedA","BFV-2Klasse-2KlasseSuedB","BFV-2KL-2KlasseSuedC",
+            "BFV-2KL-2KlasseNordReserve","BFV-2KL-2KlasseSuedAReserve","BFV-2KL-2KlasseSuedBReserve","BFV-2KL-2KlasseMitteReserve""BFV-2KL-2KlasseSuedCReserve"
+          ]
     matches=set()
     # Match finder Thread:
     # Find matches to scrape and write to database
-    matches.update(MatchFinder(start_url).getMatches())
-    print("Successfully found {} matches".format(len(matches)))
+
     # Match data scraper Thread
     # Scrape Data from Matches and save to Database
+    years=["2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011","2010"]
+    for year in years:
+        for league in leagues:
+            matches.update(MatchFinder(base_url.format(league,year)).getMatches())
+            print("Successfully found {} matches".format(len(matches)))
+
     for url in matches:
         to_database(MatchScraper(url).get_data())
+
     print("DONE")
