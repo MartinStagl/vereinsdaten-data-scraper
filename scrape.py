@@ -84,9 +84,9 @@ if __name__ == "__main__":
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--incognito')
     options.add_argument('--headless')
-    driver = webdriver.Firefox(options=options)
-    driverversion = driver.capabilities['moz:geckodriverVersion']
-    browserversion = driver.capabilities['browserVersion']
+
+    #driverversion = driver.capabilities['moz:geckodriverVersion']
+    #browserversion = driver.capabilities['browserVersion']
 
 
     # Match data scraper Thread
@@ -95,17 +95,22 @@ if __name__ == "__main__":
     for year in years:
         for league in leagues:
             try:
+                driver = webdriver.Firefox(options=options)
                 matches.update(MatchFinder(driver,base_url.format(league,year)).getMatches())
+                driver.close()
+                for url in matches:
+                    try:
+                        driver = webdriver.Firefox(options=options)
+                        to_database(MatchScraper(driver, url).get_data())
+                        driver.close()
+                    except:
+                        traceback.print_stack()
                 print("Successfully found {} matches".format(len(matches)))
             except:
                 traceback.print_stack()
-    driver.close()
-    driver = webdriver.Firefox(options=options)
 
-    for url in matches:
-        try:
-            to_database(MatchScraper(driver,url).get_data())
-        except:
-            traceback.print_stack()
-    driver.close()
+
+
+
+
     print("DONE")

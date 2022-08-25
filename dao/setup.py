@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey,Boolean
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey,Boolean, Date
 from sqlalchemy.orm import declarative_base, relationship, Session
 
 
@@ -44,7 +44,7 @@ class Match(Base):
     __tablename__ = "matches"
     id = Column(Integer, primary_key=True)
     url = Column(String,nullable=True)
-    date= Column(String,nullable=True)
+    date= Column(Date,nullable=True)
     starttime= Column(String,nullable=True)
     league=Column(String,nullable=True)
     round = Column(Integer,nullable=True)
