@@ -34,6 +34,7 @@ def to_database(data):
         #mp.starting_minute = player["starting_minute"]
         #mp.substitution_player = player["substitution_player"]
         #mp.substitution_minute = player["substitution_minute"]
+        dbc.insert_player(p)
         m.players.append(mp)
 
         #home_team.players.append(player)
@@ -53,13 +54,14 @@ def to_database(data):
         #mp.starting_minute = player["starting_minute"]
         #mp.substitution_player = player["substitution_player"]
         #mp.substitution_minute = player["substitution_minute"]
+        dbc.insert_player(p)
         m.players.append(mp)
         #away_team.players.append(player)
 
     m.away_team = away_team
     m.home_team = home_team
 
-    dbc.insert(p,m,home_team,away_team)
+    dbc.insert(m,home_team,away_team)
 
 
 if __name__ == "__main__":
