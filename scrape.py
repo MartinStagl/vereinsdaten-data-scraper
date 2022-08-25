@@ -1,6 +1,7 @@
 from scraper.selenium_match_scraper import *
 from scraper.selenium_match_finder import *
 
+from selenium import webdriver
 
 from dao.setup import *
 import dao.database_connector as dbc
@@ -77,15 +78,26 @@ if __name__ == "__main__":
     # Match finder Thread:
     # Find matches to scrape and write to database
 
+    options = webdriver.FirefoxOptions()
+    options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--incognito')
+    options.add_argument('--headless')
+    driver = webdriver.Firefox(options=options)
+    driverversion = driver.capabilities['moz:geckodriverVersion']
+    browserversion = driver.capabilities['browserVersion']
+
+
     # Match data scraper Thread
     # Scrape Data from Matches and save to Database
     years=["2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011","2010"]
     for year in years:
         for league in leagues:
-            matches.update(MatchFinder(base_url.format(league,year)).getMatches())
+            matches.update(MatchFinder(driver,base_url.format(league,year)).getMatches())
             print("Successfully found {} matches".format(len(matches)))
+    driver.close()
+    driver = webdriver.Firefox(options=options)
 
     for url in matches:
-        to_database(MatchScraper(url).get_data())
-
+        to_database(MatchScraper(driver,url).get_data())
+    driver.close()
     print("DONE")

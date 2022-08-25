@@ -1,17 +1,13 @@
-from selenium import webdriver
+
 from bs4 import BeautifulSoup
 
 
 class MatchFinder():
     driver = None
 
-    def __init__(self,
+    def __init__(self,driver,
                  url='https://www.oefb.at/bewerbe/Spiel/Aufstellung/3172013/?Sigless-2-Kl-Cup-A-vs-Grosshoeflein-2-N-/aufstellung'):
-        options = webdriver.FirefoxOptions()
-        options.add_argument('--ignore-certificate-errors')
-        options.add_argument('--incognito')
-        options.add_argument('--headless')
-        self.driver = webdriver.Firefox(options=options)
+        self.driver=driver
         self.driver.implicitly_wait(60)
         self.driver.get(url)
 
