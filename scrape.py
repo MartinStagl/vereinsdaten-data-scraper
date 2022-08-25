@@ -2,7 +2,7 @@ from scraper.selenium_match_scraper import *
 from scraper.selenium_match_finder import *
 
 from selenium import webdriver
-
+import traceback
 from dao.setup import *
 import dao.database_connector as dbc
 
@@ -94,12 +94,18 @@ if __name__ == "__main__":
     years=["2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011","2010"]
     for year in years:
         for league in leagues:
-            matches.update(MatchFinder(driver,base_url.format(league,year)).getMatches())
-            print("Successfully found {} matches".format(len(matches)))
+            try:
+                matches.update(MatchFinder(driver,base_url.format(league,year)).getMatches())
+                print("Successfully found {} matches".format(len(matches)))
+            except:
+                traceback.print_stack()
     driver.close()
     driver = webdriver.Firefox(options=options)
 
     for url in matches:
-        to_database(MatchScraper(driver,url).get_data())
+        try:
+            to_database(MatchScraper(driver,url).get_data())
+        except:
+            traceback.print_stack()
     driver.close()
     print("DONE")
