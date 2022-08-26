@@ -7,12 +7,13 @@ conn = engine.connect()
 
 def insert_player(p:Player):
     with Session(bind=engine) as session:
+        print("Inserting new player")
         session.add(p)
         session.commit()
 def insert(m:Match,home_team:Team,away_team:Team):
     with Session(bind=engine) as session:
         # add users
-
+        print("Inserting new match")
         session.add(home_team)
         session.commit()
         session.add(away_team)
