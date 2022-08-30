@@ -33,7 +33,7 @@ class MatchPlayer(Base):
 class Player(Base):
     __tablename__ = "players"
     id = Column(Integer, primary_key=True)
-    url = Column(String, nullable=True)
+    url = Column(String,unique=True)
     name = Column(String)
     nationality=Column(String)
     birthyear=Column(Integer)
@@ -43,7 +43,7 @@ class Player(Base):
 class Match(Base):
     __tablename__ = "matches"
     id = Column(Integer, primary_key=True)
-    url = Column(String,nullable=True)
+    url = Column(String,nullable=True,unique=True)
     date= Column(Date,nullable=True)
     starttime= Column(String,nullable=True)
     league=Column(String,nullable=True)
