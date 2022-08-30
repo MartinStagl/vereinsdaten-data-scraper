@@ -54,10 +54,10 @@ class Match(Base):
     result= Column(Integer,nullable=True)
 
     away_team_id=Column(ForeignKey('teams.id'))
-    away_team = relationship("Team", back_populates="teams", foreign_keys="[Match.away_team_id]")
+    away_team = relationship("Team",  foreign_keys="[Match.away_team_id]")
 
     home_team_id = Column(ForeignKey('teams.id'))
-    home_team = relationship("Team", back_populates="teams", foreign_keys="[Match.home_team_id]")
+    home_team = relationship("Team",  foreign_keys="[Match.home_team_id]")
 
     #players = relationship('MatchPlayer', back_populates='match')
 
