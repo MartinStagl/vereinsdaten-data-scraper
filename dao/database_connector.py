@@ -37,4 +37,6 @@ def get_or_insert_team(name):
         if not team:
             team = Team()
             team.name=name
-        return team
+        session.add(team)
+        session.commit()
+    return team
