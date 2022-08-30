@@ -17,13 +17,13 @@ class MatchPlayer(Base):
     id = Column(Integer, primary_key=True)
 
     player_id = Column(ForeignKey('players.id'))
-    match_id = Column(ForeignKey('matches.id'))
+    #match_id = Column(ForeignKey('matches.id'))
     team_id = Column(ForeignKey('teams.id'))
 
 
     player = relationship("Player", back_populates="matches", foreign_keys="[MatchPlayer.player_id]")
     #match = relationship("Match", back_populates="players")
-    team = relationship("Team", back_populates="players", foreign_keys="[MatchPlayer.team_id]")
+    team = relationship("Team", back_populates="matches_players", foreign_keys="[MatchPlayer.team_id]")
 
     position = Column(String, nullable=True)
     goals = Column(Integer, nullable=True)
