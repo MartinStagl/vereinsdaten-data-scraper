@@ -103,9 +103,9 @@ if __name__ == "__main__":
                         to_database(MatchScraper(driver, url).get_data())
                         driver.close()
                     except:
-                        traceback.print_stack()
+                        print(traceback.format_exc())
                 print("Successfully found {} matches".format(len(matches)))
             except:
-                traceback.print_stack()
+                print(traceback.format_exc())
 
     print("DONE")
