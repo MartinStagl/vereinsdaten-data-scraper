@@ -32,6 +32,7 @@ def to_database(data):
         mp.position = player["position"]
         mp.red_cards = player["red_cards"]
         mp.yellow_cards = player["yellow_cards"]
+        mp.team=home_team
         #mp.starting_minute = player["starting_minute"]
         #mp.substitution_player = player["substitution_player"]
         #mp.substitution_minute = player["substitution_minute"]
@@ -52,6 +53,7 @@ def to_database(data):
         mp.position = player["position"]
         mp.red_cards = player["red_cards"]
         mp.yellow_cards = player["yellow_cards"]
+        mp.team = away_team
         #mp.starting_minute = player["starting_minute"]
         #mp.substitution_player = player["substitution_player"]
         #mp.substitution_minute = player["substitution_minute"]
