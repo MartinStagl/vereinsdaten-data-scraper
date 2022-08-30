@@ -18,10 +18,9 @@ def to_database(data):
     m.round = data["round"]
     m.result = data["result"]
 
-    home_team=Team()
-    home_team.name=data["home_team_name"]
-    away_team=Team()
-    away_team.name = data["away_team_name"]
+    home_team=dbc.get_or_insert_team(data["home_team_name"])
+    away_team=dbc.get_or_insert_team(data["away_team_name"])
+
     for player in data["home_players"]:
         p = dbc.get_or_insert_player(player["url"])
         p.name= player["name"]

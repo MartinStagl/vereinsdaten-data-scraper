@@ -29,3 +29,13 @@ def get_or_insert_player(url):
             player = Player()
             player.url=url
         return player
+
+
+def get_or_insert_team(name):
+    with Session(bind=engine) as session:
+        team = session.query(Team).filter_by(name=name).first()
+        if not team:
+            team = Team()
+            team.name=name
+        session.add(team)
+        return team
