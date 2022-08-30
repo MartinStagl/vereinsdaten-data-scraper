@@ -62,8 +62,8 @@ class Team(Base):
    id = Column(Integer, primary_key=True)
    name = Column(String)
    year = Column(Integer)
-   away_matches = relationship('Match',  primaryjoin="Match.away_team_id==Team.id")
-   home_matches = relationship('Match',  primaryjoin="Match.home_team_id==Team.id")
+   away_matches = relationship('Match',  primaryjoin="Match.away_team_id==Team.id", back_populates='team')
+   home_matches = relationship('Match',  primaryjoin="Match.home_team_id==Team.id", back_populates='team')
 
    players = relationship('Player', secondary='teams_players', back_populates='teams')
 
