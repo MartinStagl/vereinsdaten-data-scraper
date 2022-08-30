@@ -37,5 +37,4 @@ def get_or_insert_team(name):
         if not team:
             team = Team()
             team.name=name
-        session.add(team)
         return team
