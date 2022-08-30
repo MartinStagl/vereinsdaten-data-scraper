@@ -41,7 +41,7 @@ class Player(Base):
     nationality=Column(String)
     birthyear=Column(Integer)
     #matches = relationship('MatchPlayer',  back_populates='player', foreign_keys="[MatchPlayer.player_id]")
-    teams = relationship('Team', secondary='teams_players',  back_populates='players')
+    #teams = relationship('Team', secondary='teams_players',  back_populates='players')
 
 class Match(Base):
     __tablename__ = "matches"
