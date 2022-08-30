@@ -6,10 +6,13 @@ import traceback
 from dao.setup import *
 import dao.database_connector as dbc
 
+
+from datetime import datetime
+
 def to_database(data):
     m = Match()
     m.url = data["url"]
-    m.date = data["date"]
+    m.date = datetime.strptime(data["date"], "%d.%m.%Y")
     m.starttime = data["starttime"]
     m.league = data["league"]
     m.round = data["round"]
