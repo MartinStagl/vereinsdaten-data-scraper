@@ -16,11 +16,14 @@ class MatchPlayer(Base):
     __tablename__ = "matches_players"
     id = Column(Integer, primary_key=True)
 
-    player_id = Column(ForeignKey('players.id'))
+    #player_id = Column(ForeignKey('players.id'))
     match_id = Column(ForeignKey('matches.id'))
+    team_id = Column(ForeignKey('teams.id'))
 
-    player = relationship("Player", back_populates="matches", foreign_keys="[MatchPlayer.player_id]")
+
+    #player = relationship("Player", back_populates="matches", foreign_keys="[MatchPlayer.player_id]")
     match = relationship("Match", back_populates="players")
+    team = relationship("Team", back_populates="teams", foreign_keys="[MatchPlayer.team_id]")
 
     position = Column(String, nullable=True)
     goals = Column(Integer, nullable=True)
@@ -50,22 +53,24 @@ class Match(Base):
     round = Column(Integer,nullable=True)
     result= Column(Integer,nullable=True)
 
-    away_team_id=Column(Integer, ForeignKey('teams.id'))
-    home_team_id=Column(Integer, ForeignKey('teams.id'))
+    away_team_id=Column(ForeignKey('teams.id'))
+    away_team = relationship("Team", back_populates="teams", foreign_keys="[Match.away_team_id]")
 
-    #away_team = relationship('Team', ForeignKey('matches.away_team_id'))
-    #home_team = relationship('Team', ForeignKey('matches.home_team_id'))
-    players = relationship('MatchPlayer', back_populates='match')
+    home_team_id = Column(ForeignKey('teams.id'))
+    home_team = relationship("Team", back_populates="teams", foreign_keys="[Match.home_team_id]")
+
+    #players = relationship('MatchPlayer', back_populates='match')
 
 class Team(Base):
    __tablename__ = "teams"
    id = Column(Integer, primary_key=True)
    name = Column(String)
    year = Column(Integer)
-   away_matches = relationship('Match',  primaryjoin="Match.away_team_id==Team.id", back_populates='team')
-   home_matches = relationship('Match',  primaryjoin="Match.home_team_id==Team.id", back_populates='team')
 
-   players = relationship('Player', secondary='teams_players', back_populates='teams')
+   away_matches = relationship('Match',  primaryjoin="Match.away_team_id==Team.id")
+   home_matches = relationship('Match',  primaryjoin="Match.home_team_id==Team.id")
+
+   players = relationship('MatchPlayer', back_populates='team')
 
 
 class TeamPlayer(Base):
