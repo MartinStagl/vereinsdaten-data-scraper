@@ -26,5 +26,6 @@ def get_or_insert_player(url):
     with Session(bind=engine) as session:
         player = session.query(Player).filter_by(url=url).first()
         if not player:
-           player = Player(url)
+            player = Player()
+            player.url=url
         return player
