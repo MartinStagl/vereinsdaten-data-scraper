@@ -70,7 +70,7 @@ class Team(Base):
    away_matches = relationship('Match',  primaryjoin="Match.away_team_id==Team.id")
    home_matches = relationship('Match',  primaryjoin="Match.home_team_id==Team.id")
 
-   players = relationship('MatchPlayer')
+   players = relationship('MatchPlayer',lazy='subquery')
 
 
 class TeamPlayer(Base):

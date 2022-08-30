@@ -21,6 +21,8 @@ def to_database(data):
     home_team=dbc.get_or_insert_team(data["home_team_name"])
     away_team=dbc.get_or_insert_team(data["away_team_name"])
 
+    dbc.insert_teams(home_team,away_team)
+
     for player in data["home_players"]:
         p = dbc.get_or_insert_player(player["url"])
         p.name= player["name"]
@@ -64,7 +66,7 @@ def to_database(data):
     m.away_team = away_team
     m.home_team = home_team
 
-    dbc.insert(m,home_team,away_team)
+    dbc.insert_match(m)
 
 
 if __name__ == "__main__":
