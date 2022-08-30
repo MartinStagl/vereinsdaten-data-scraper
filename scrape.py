@@ -37,7 +37,7 @@ def to_database(data):
         #mp.substitution_minute = player["substitution_minute"]
         #home_team.players.append(p)
         dbc.insert_player(p)
-        m.players.append(mp)
+        home_team.players.append(mp)
 
         #home_team.players.append(player)
 
@@ -56,8 +56,8 @@ def to_database(data):
         #mp.substitution_player = player["substitution_player"]
         #mp.substitution_minute = player["substitution_minute"]
         dbc.insert_player(p)
-        m.players.append(mp)
-        #away_team.players.append(p)
+        #m.players.append(mp)
+        away_team.players.append(p)
 
     m.away_team = away_team
     m.home_team = home_team
