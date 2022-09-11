@@ -5,7 +5,7 @@ from selenium import webdriver
 import traceback
 from dao.setup import *
 import dao.database_connector as dbc
-
+import sys
 
 from datetime import datetime
 
@@ -21,7 +21,7 @@ def to_database(data):
     home_team=dbc.get_or_insert_team(data["home_team_name"])
     away_team=dbc.get_or_insert_team(data["away_team_name"])
 
-    dbc.insert_teams(home_team,away_team)
+    #dbc.insert_teams(home_team,away_team)
 
     for player in data["home_players"]:
         p = dbc.get_or_insert_player(player["url"])
@@ -69,6 +69,7 @@ def to_database(data):
     m.home_team = home_team
 
     dbc.insert_match(m)
+    dbc.session.close()
 
 
 if __name__ == "__main__":
@@ -110,9 +111,13 @@ if __name__ == "__main__":
                         driver = webdriver.Firefox(options=options)
                         to_database(MatchScraper(driver, url).get_data())
                         driver.close()
+                    except KeyboardInterrupt:
+                        sys.exit()
                     except:
                         print(traceback.format_exc())
                 print("Successfully found {} matches".format(len(matches)))
+            except KeyboardInterrupt:
+                sys.exit()
             except:
                 print(traceback.format_exc())
 

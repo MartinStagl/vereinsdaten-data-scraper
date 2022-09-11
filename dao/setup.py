@@ -23,7 +23,7 @@ class MatchPlayer(Base):
 
     player = relationship("Player", back_populates="matches", foreign_keys="[MatchPlayer.player_id]")
     #match = relationship("Match", back_populates="players")
-    team = relationship("Team", back_populates="players", foreign_keys="[MatchPlayer.team_id]")
+    team = relationship("Team", back_populates="players", foreign_keys="[MatchPlayer.team_id]",lazy='subquery')
 
     position = Column(String, nullable=True)
     goals = Column(Integer, nullable=True)
@@ -70,7 +70,7 @@ class Team(Base):
    away_matches = relationship('Match',  primaryjoin="Match.away_team_id==Team.id")
    home_matches = relationship('Match',  primaryjoin="Match.home_team_id==Team.id")
 
-   players = relationship('MatchPlayer',lazy='subquery')
+   players = relationship('MatchPlayer')#,lazy='subquery')
 
 
 class TeamPlayer(Base):

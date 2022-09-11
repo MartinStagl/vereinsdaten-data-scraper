@@ -5,40 +5,39 @@ from .setup import *
 engine = create_engine('sqlite:///verbands.db', echo=True)
 conn = engine.connect()
 
+
+session = Session(engine)
+
+
 def insert_player(p:Player):
-    with Session(bind=engine) as session:
-        print("Inserting new player")
-        session.add(p)
-        session.commit()
+    print("Inserting new player")
+    session.add(p)
+    session.commit()
 def insert_match(m:Match):
-    with Session(bind=engine) as session:
-        # add users
-        print("Inserting new match")
-        session.commit()
-        session.add(m)
-        session.commit()
+    # add users
+    print("Inserting new match")
+    session.commit()
+    session.add(m)
+    session.commit()
 
 def insert_teams(home_team:Team,away_team:Team):
-    with Session(bind=engine) as session:
-        # add users
-        print("Inserting new teams")
-        session.add(home_team)
-        session.commit()
-        session.add(away_team)
-        session.commit()
+    # add users
+    print("Inserting new teams")
+    session.add(home_team)
+    session.commit()
+    session.add(away_team)
+    session.commit()
 def get_or_insert_player(url):
-    with Session(bind=engine) as session:
-        player = session.query(Player).filter_by(url=url).first()
-        if not player:
-            player = Player()
-            player.url=url
+    player = session.query(Player).filter_by(url=url).first()
+    if not player:
+        player = Player()
+        player.url=url
     return player
 
 
 def get_or_insert_team(name):
-    with Session(bind=engine) as session:
-        team = session.query(Team).filter_by(name=name).first()
-        if not team:
-            team = Team()
-            team.name=name
+    team = session.query(Team).filter_by(name=name).first()
+    if not team:
+        team = Team()
+        team.name=name
     return team
