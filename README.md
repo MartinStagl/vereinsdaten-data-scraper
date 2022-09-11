@@ -33,6 +33,11 @@ All data and metadata shall be stored in a relational database like Postgres or 
   - Write Credentials into db.properties file
   - Install requirements.txt
   - Start main.py
+  
+  
+## Todos:
+
+  - Processs and store events of a match
 ---
 
 ## Beschreibung
