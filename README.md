@@ -1,55 +1,48 @@
 # vereinsdaten-data-scraper
 
+[ [ENGLISH BELOW](#description) ]
 
-[GERMAN BELOW / DEUTSCH UNTEN]
+---
+
+## Beschreibung
+Durch diesen Code kann man Match-, Vereins- und Spielerdaten von den Homepages des ÖFB und den Verbänden 
+der einzelnen Bundesländer zur eigenen Analyse speichern. 
+
+Die Webseiten werden mittels Selenium und dem Firefox Browser im Headless Modus abgefragt, da es bis zum jetzigen
+Zeitpunkt keine APIs gibt und auch das Aufrufen der Seiten über einfache GET Requests nicht möglich ist. 
+Es wird festgehalten, dass alle Daten nach den FAIR Prinzipien gescraped werden.
+
+Die gescrapeten Daten und Metadaten werden dann nach dem oben gezeigten Schema in einer SQLite Datenbank gesichert.
+
+
+---
 
 ## Description
-This project allows you to scrape match data from the ÖFB federation homepages. Initially it is build uppon the BFV site but later support for the other sites will be added.
+This project allows you to scrape match data from the ÖFB federation homepages. 
+Initially it is build uppon the BFV site but later support for the other sites will be added.
 
-Different methods will be available to scrape the data all following the FAIR use principle. The data can be scraped directly parsing the returned HTML information from GET requests. 
+The data is scraped using Selenium with the Firefox browser in headless mode as there was to this time now API or easy processing of directly called pages via GET requests possible
+and all the data are scraped following the FAIR use principle.
 
-The links to the sites to be scraped will be crawled.
-
-All data and metadata shall be stored in a relational database like Postgres or MariaDB.
+All data and metadata is stored in an SQLite database.
 
 ## Design
 - Database: 
   - Tables for Analysis
-    - TEAMS Table (Which Team in which year which league)
-    - PLAYER Table (which Player which game which date)
-    - GAME Table (which score, which additional game data
-  - Tables with additional data
-    - Scrape Meta Data Table (stores information about the scraping)
+    - TEAMS Table (identifies Teams)
+    - PLAYER Table (identifies Players)
+    - Match Table (identifies Matches)
+      - MatchPlayer (which Player, which game, which date, which metrics)
+      - MatchActivity Table (which action, when in the game, by whom)
     
-- Link Crawler
-  - Get links to games
+  - Tables with additional data [TO BE DONE]
+    - Scrape Meta Data Table (stores information about the scraping)
   
 - Scraper
   - HTML Parsing with beautiful soap
 
-## Usage
 
-  - Create Database and Load Schema
-  - Write Credentials into db.properties file
-  - Install requirements.txt
-  - Start main.py
-  
-  
-## Todos:
-
-  - Processs and store events of a match
----
-
-## Beschreibung
-Durch diesen Code kann man Match, Vereins und Spieler Daten von den Homepages des ÖFB und den Verbänden der einzelnen Bundesländer downloaden und in eine Datenbank zur Analyse speichern. Als erstes wird nur das Speichern von Daten vom BFV programmiert, aber später sollen auch die anderen Verbände abgefragt werden.
-
-Dabei sollen unterschiedliche Abfragemethoden unterstützt werden, welche aber alle den FAIR Prinzipien folgen sollen. Als erstes wird das direkte Scrapen und Parsen von HTML Daten unterstützt. 
-
-Die Links zu den Seiten soll ein Crawler finden.
-
-Alle Daten sollen in einer relationalen Datenbank gespeichert werden.
-
-## Design
+## Installation
 https://medium.com/@stefan.preusler/selenium-firefox-in-python-auf-einem-ubuntu-server-df4abc818853
 
 > sudo apt update
@@ -80,13 +73,10 @@ https://medium.com/@stefan.preusler/selenium-firefox-in-python-auf-einem-ubuntu-
 
 > python scrape.py
 
-## Verwendung
 
-setup:
 
 ---
-
 ### Contact me / Kontaktiere mich
-
+https://www.linkedin.com/in/martin-stagl/ 
 
 
