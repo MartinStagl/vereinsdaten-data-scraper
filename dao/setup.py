@@ -17,12 +17,12 @@ class MatchPlayer(Base):
     id = Column(Integer, primary_key=True)
 
     player_id = Column(ForeignKey('players.id'))
-    #match_id = Column(ForeignKey('matches.id'))
+    match_id = Column(ForeignKey('matches.id'))
     team_id = Column(ForeignKey('teams.id'))
 
 
     player = relationship("Player", back_populates="matches", foreign_keys="[MatchPlayer.player_id]")
-    #match = relationship("Match", back_populates="players")
+    match = relationship("Match", back_populates="players")
     team = relationship("Team", back_populates="players", foreign_keys="[MatchPlayer.team_id]",lazy='subquery')
 
     position = Column(String, nullable=True)
@@ -59,6 +59,7 @@ class Match(Base):
     home_team_id = Column(ForeignKey('teams.id'))
     home_team = relationship("Team",  foreign_keys="[Match.home_team_id]",back_populates='home_matches')
 
+    players = relationship('MatchPlayer')  # ,lazy='subquery')
     activities = relationship('MatchActivity')
 
 class Team(Base):
