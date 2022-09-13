@@ -121,7 +121,8 @@ if __name__ == "__main__":
                 driver = webdriver.Firefox(options=options)
                 matches.update(MatchFinder(driver,base_url.format(league,year)).getMatches())
                 driver.close()
-                for url in matches:
+                temp_set=matches.copy()
+                for url in temp_set:
                     try:
                         driver = webdriver.Firefox(options=options)
                         data={}
