@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
 
 from .setup import *
 
-engine = create_engine('sqlite:///verbands.db', echo=True)
+engine = create_engine('sqlite:///verbands.db.working', echo=True)
 conn = engine.connect()
 
 
@@ -16,7 +16,6 @@ def insert_player(p:Player):
 def insert_match(m:Match):
     # add users
     print("Inserting new match")
-    session.commit()
     session.add(m)
     session.commit()
 
@@ -34,10 +33,16 @@ def get_or_insert_player(url):
         player.url=url
     return player
 
-
 def get_or_insert_team(name):
     team = session.query(Team).filter_by(name=name).first()
     if not team:
         team = Team()
         team.name=name
     return team
+
+def get_or_insert_match(url):
+    match = session.query(Match).filter_by(url=url).first()
+    if not match:
+        match = Match()
+        match.url = url
+    return match

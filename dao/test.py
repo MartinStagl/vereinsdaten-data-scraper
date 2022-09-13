@@ -3,7 +3,7 @@ from sqlalchemy.orm import declarative_base, relationship, Session
 
 # Make the engine
 #engine = create_engine("sqlite+pysqlite:///:memory:", future=True, echo=False)
-engine = create_engine('sqlite:///verbands.db', echo=True)
+engine = create_engine('sqlite:///verbands.db.working', echo=True)
 # Make the DeclarativeMeta
 Base = declarative_base()
 

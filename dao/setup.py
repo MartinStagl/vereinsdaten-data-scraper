@@ -30,8 +30,8 @@ class MatchPlayer(Base):
     yellow_cards = Column(Integer, nullable=True)
     red_cards = Column(Integer, nullable=True)
     starting_minute = Column(Integer, nullable=True)
-    substitution_minute = Column(Integer, nullable=True)
-    substitution_player= Column(Integer, ForeignKey('players.id'),nullable=True)
+    #substitution_minute = Column(Integer, nullable=True)
+    #substitution_player= Column(Integer, ForeignKey('players.id'),nullable=True)
 
 class Player(Base):
     __tablename__ = "players"
@@ -59,7 +59,7 @@ class Match(Base):
     home_team_id = Column(ForeignKey('teams.id'))
     home_team = relationship("Team",  foreign_keys="[Match.home_team_id]",back_populates='home_matches')
 
-    #players = relationship('MatchPlayer', back_populates='match')
+    activities = relationship('MatchActivity')
 
 class Team(Base):
    __tablename__ = "teams"
@@ -73,11 +73,25 @@ class Team(Base):
    players = relationship('MatchPlayer')#,lazy='subquery')
 
 
-class TeamPlayer(Base):
-   __tablename__ = "teams_players"
+class MatchActivity(Base):
+   __tablename__ = "matches_activity"
    id = Column(Integer, primary_key=True)
+
    player_id = Column(Integer, ForeignKey('players.id'))
+   substitution_player_id=Column(Integer, ForeignKey('players.id'))
+
    team_id = Column(Integer, ForeignKey('teams.id'))
+
+
+   match_id = Column(ForeignKey('matches.id'))
+
+   player = relationship("Player", foreign_keys="[MatchActivity.player_id]")
+   team = relationship("Team", foreign_keys="[MatchActivity.team_id]")
+   minute = Column(Integer, nullable=True)
+   standing = Column(String, nullable=True)
+   type = Column(String, nullable=True)
+   text = Column(String, nullable=True)
+   substitution_player = relationship("Player", foreign_keys="[MatchActivity.substitution_player_id]")
 
 
 # Create the tables in the database

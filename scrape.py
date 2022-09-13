@@ -10,8 +10,7 @@ import sys
 from datetime import datetime
 
 def to_database(data):
-    m = Match()
-    m.url = data["url"]
+    m = dbc.get_or_insert_match(data["url"])
     m.date = datetime.strptime(data["date"], "%d.%m.%Y")
     m.starttime = data["starttime"]
     m.league = data["league"]
@@ -64,6 +63,20 @@ def to_database(data):
         dbc.insert_player(p)
         #m.players.append(mp)
 
+    for activity in data["activities"]:
+        a=MatchActivity()
+        a.text=activity["text"]
+        if activity["team"]=="home":
+            a.team=home_team
+        else:
+            a.team=away_team
+        a.player=dbc.get_or_insert_player(activity["player"])
+        a.minute=activity["minute"]
+        a.standing=activity["standing"]
+        if activity["substitution_player"]!="":
+            a.substitution_player=dbc.get_or_insert_player(activity["substitution_player"])
+        a.type=activity["type"]
+        m.activities.append(a)
 
     m.away_team = away_team
     m.home_team = home_team
@@ -109,7 +122,10 @@ if __name__ == "__main__":
                 for url in matches:
                     try:
                         driver = webdriver.Firefox(options=options)
-                        to_database(MatchScraper(driver, url).get_data())
+                        data={}
+                        data=MatchScraper(driver, url).get_formation()
+                        data.update(MatchScraper(driver,url).get_activities())
+                        to_database(data)
                         driver.close()
                     except KeyboardInterrupt:
                         sys.exit()

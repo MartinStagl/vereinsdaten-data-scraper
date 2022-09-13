@@ -2,7 +2,7 @@
 from setup import *
 
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
-engine = create_engine('sqlite:///verbands.db', echo=True)
+engine = create_engine('sqlite:///verbands.db.working', echo=True)
 
 # Test it
 with Session(bind=engine) as session:
