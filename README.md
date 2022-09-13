@@ -53,10 +53,15 @@ Alle Daten sollen in einer relationalen Datenbank gespeichert werden.
 https://medium.com/@stefan.preusler/selenium-firefox-in-python-auf-einem-ubuntu-server-df4abc818853
 
 > sudo apt update
+
 > sudo apt install firefox
+
 > sudo apt install python3-pip
+
 > sudo apt install python3-venv
+
 > python3 -m venv env
+
 > source env/bin/activate
 
 > wget https://github.com/mozilla/geckodriver/releases/download/v0.31.0/geckodriver-v0.31.0-linux64.tar.gz
@@ -74,6 +79,7 @@ https://medium.com/@stefan.preusler/selenium-firefox-in-python-auf-einem-ubuntu-
 > pip install -r requirements.txt
 
 > python scrape.py
+
 ## Verwendung
 
 setup:
