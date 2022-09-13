@@ -129,6 +129,7 @@ if __name__ == "__main__":
                         data.update(MatchScraper(driver,url).get_activities())
                         to_database(data)
                         driver.close()
+                        matches.remove(url)
                     except KeyboardInterrupt:
                         sys.exit()
                     except:
@@ -138,5 +139,6 @@ if __name__ == "__main__":
                 sys.exit()
             except:
                 print(traceback.format_exc())
+        print(matches)
 
     print("DONE")
