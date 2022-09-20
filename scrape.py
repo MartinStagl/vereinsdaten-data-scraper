@@ -90,7 +90,7 @@ def to_database(data):
 if __name__ == "__main__":
     #start_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/BFV-2KL-2N/Spielplan/aktuell/{}"
     base_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/{}/Spielplan/aktuell/{}"
-    leagues=["BFV-Regionalliga-RegionalligaOst",
+    leagues=["BFV-NeuerEintrag-RegionalligaOst",
             "BFV-BVZBurgenlandliga-BVZBurgenlandliga","BFV-BL-BurgenlandligaReserve",
           "BFV-IILigen-IILigaNord","BFV-IILiga-IILigaMitte","BFV-IILigen-IILigaSued",
             "BFV-IILiga-IILigaNordReserve","BFV-IILiga-IILigaMitteReserve","BFV-IILiga-IILigaSuedReserve",
