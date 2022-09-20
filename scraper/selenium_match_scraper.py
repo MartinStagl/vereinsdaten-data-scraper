@@ -94,7 +94,7 @@ class MatchScraper():
         data["date"] = soup.select('div .date ')[0].text
         data["starttime"] = soup.select('div.detail > div:nth-child(3) > div:nth-child(1) > span:nth-child(2)')[0].text
         data["league"] = soup.select('div.detail > div:nth-child(1) > span:nth-child(2)')[0].text
-        data["round"] = soup.select('div.detail > div:nth-child(1) > span:nth-child(3)')[0].text
+        data["round"] = soup.select('div > div.round')[0].text
         data["result"] = soup.select('.ergebnis')[0].text
         data["home_team_name"] = soup.select('div > div.teams > a:nth-child(2)')[0].text.strip()
         data["away_team_name"] = soup.select('div > div.teams > a:nth-child(3)')[0].text.strip()
