@@ -95,9 +95,9 @@ if __name__ == "__main__":
           "BFV-IILigen-IILigaNord","BFV-IILiga-IILigaMitte","BFV-IILigen-IILigaSued",
             "BFV-IILiga-IILigaNordReserve","BFV-IILiga-IILigaMitteReserve","BFV-IILiga-IILigaSuedReserve",
           "BFV-1Klassen-1KlasseNord/Spielplan","BFV-1Klasse-1Mitte","BFV-1Klassen-1KlasseSuedB",
-            "BFV-1KL-1KlasseNordReserve","BFV-1KL-1KlasseMitteReserve","BFV-1KL-1KlasseSuedReserve"
+            "BFV-1KL-1KlasseNordReserve","BFV-1KL-1KlasseMitteReserve","BFV-1KL-1KlasseSuedReserve",
           "BFV-2KL-2N","BFV-2Klassen-2KlasseMitte","BFV-2Klasse-2KlasseSuedA","BFV-2Klasse-2KlasseSuedB","BFV-2KL-2KlasseSuedC",
-            "BFV-2KL-2KlasseNordReserve","BFV-2KL-2KlasseSuedAReserve","BFV-2KL-2KlasseSuedBReserve","BFV-2KL-2KlasseMitteReserve""BFV-2KL-2KlasseSuedCReserve"
+            "BFV-2KL-2KlasseNordReserve","BFV-2KL-2KlasseSuedAReserve","BFV-2KL-2KlasseSuedBReserve","BFV-2KL-2KlasseMitteReserve","BFV-2KL-2KlasseSuedCReserve"
           ]
     matches=set()
     # Match finder Thread:
