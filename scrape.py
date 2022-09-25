@@ -90,7 +90,7 @@ def to_database(data):
 if __name__ == "__main__":
     #start_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/BFV-2KL-2N/Spielplan/aktuell/{}"
     base_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/{}/Spielplan/aktuell/{}"
-    leagues=["BFV-NeuerEintrag-RegionalligaOst",
+    leagues=["BFV-NeuerEintrag-RegionalligaOst","BFV-Regionalliga-RegionalligaOst",
             "BFV-BVZBurgenlandliga-BVZBurgenlandliga","BFV-BL-BurgenlandligaReserve",
           "BFV-IILigen-IILigaNord","BFV-IILiga-IILigaMitte","BFV-IILigen-IILigaSued",
             "BFV-IILiga-IILigaNordReserve","BFV-IILiga-IILigaMitteReserve","BFV-IILiga-IILigaSuedReserve",
@@ -115,8 +115,8 @@ if __name__ == "__main__":
     # Match data scraper Thread
     # Scrape Data from Matches and save to Database
     years=["2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011","2010"]
-    for year in years:
-        for league in leagues:
+    for league in leagues:
+        for year in years:
             try:
                 driver = webdriver.Firefox(options=options)
                 matches.update(MatchFinder(driver,base_url.format(league,year)).getMatches())
