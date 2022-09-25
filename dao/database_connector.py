@@ -33,6 +33,13 @@ def get_or_insert_player(url):
         player.url=url
     return player
 
+def get_or_insert_trainer(name):
+    trainer = session.query(Trainer).filter_by(name=name).first()
+    if not trainer:
+        trainer = Trainer()
+        trainer.name = name
+    return trainer
+
 def get_or_insert_team(name):
     team = session.query(Team).filter_by(name=name).first()
     if not team:

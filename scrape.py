@@ -20,6 +20,11 @@ def to_database(data):
     home_team=dbc.get_or_insert_team(data["home_team_name"])
     away_team=dbc.get_or_insert_team(data["away_team_name"])
 
+    home_team_trainer = dbc.get_or_insert_trainer(data["home_team_trainer"])
+    away_team_trainer = dbc.get_or_insert_trainer(data["away_team_trainer"])
+
+    m.home_team_trainer=home_team_trainer
+    m.away_team_trainer=away_team_trainer
     #dbc.insert_teams(home_team,away_team)
 
     for player in data["home_players"]:
@@ -114,7 +119,7 @@ if __name__ == "__main__":
 
     # Match data scraper Thread
     # Scrape Data from Matches and save to Database
-    years=["2022","2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011","2010"]
+    years=["2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011","2010","2022"]
     for league in leagues:
         for year in years:
             try:
