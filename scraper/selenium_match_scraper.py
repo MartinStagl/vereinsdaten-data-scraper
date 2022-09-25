@@ -100,8 +100,8 @@ class MatchScraper():
         data["home_team_name"] = soup.select('div > div.teams > a:nth-child(2)')[0].text.strip()
         data["away_team_name"] = soup.select('div > div.teams > a:nth-child(3)')[0].text.strip()
 
-        data["home_team_trainer"]= soup.select('.person_box_short_1 > span')[0].text.strip()
-        data["away_team_trainer"] = soup.select('.person_box_short_1 > span')[2].text.strip()
+        data["home_team_trainer"]= soup.select('.person_box_short_1 > span')[0].text.replace("Trainer:","").strip()
+        data["away_team_trainer"] = soup.select('.person_box_short_1 > span')[2].text.replace("Trainer:","").strip()
 
         data["home_players"] = [process_player(item) for item in zip(*[iter(soup.select(
             'div[data-heimaufstellung] .c1,div[data-heimaufstellung] .c2,div[data-heimaufstellung] .c3,div[data-heimaufstellung] .c4,div[data-heimaufstellung] .c5,div[data-heimaufstellung] .c6,div[data-heimaufstellung] .c7,div[data-heimaufstellung] .c8'))] * 8)]
