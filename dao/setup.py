@@ -55,9 +55,13 @@ class Match(Base):
 
     away_team_id=Column(ForeignKey('teams.id'))
     away_team = relationship("Team",  foreign_keys="[Match.away_team_id]",back_populates='away_matches')
+    away_team_trainer_id = Column(ForeignKey('players.id'))
+    away_team_trainer = relationship("Player", back_populates="matches", foreign_keys="[Match.away_team_trainer_id]")
 
     home_team_id = Column(ForeignKey('teams.id'))
     home_team = relationship("Team",  foreign_keys="[Match.home_team_id]",back_populates='home_matches')
+    home_team_trainer_id = Column(ForeignKey('players.id'))
+    home_team_trainer = relationship("Player", back_populates="matches", foreign_keys="[Match.home_team_trainer_id]")
 
     players = relationship('MatchPlayer')  # ,lazy='subquery')
     activities = relationship('MatchActivity')

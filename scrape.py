@@ -1,6 +1,6 @@
 from scraper.selenium_match_scraper import *
 from scraper.selenium_match_finder import *
-
+import pickle
 from selenium import webdriver
 import traceback
 from dao.setup import *
@@ -90,15 +90,18 @@ def to_database(data):
 if __name__ == "__main__":
     #start_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/BFV-2KL-2N/Spielplan/aktuell/{}"
     base_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/{}/Spielplan/aktuell/{}"
-    leagues=["BFV-NeuerEintrag-RegionalligaOst","BFV-Regionalliga-RegionalligaOst",
-            "BFV-BVZBurgenlandliga-BVZBurgenlandliga","BFV-BL-BurgenlandligaReserve",
-          "BFV-IILigen-IILigaNord","BFV-IILiga-IILigaMitte","BFV-IILigen-IILigaSued",
-            "BFV-IILiga-IILigaNordReserve","BFV-IILiga-IILigaMitteReserve","BFV-IILiga-IILigaSuedReserve",
-          "BFV-1Klassen-1KlasseNord/Spielplan","BFV-1Klasse-1Mitte","BFV-1Klassen-1KlasseSuedB",
-            "BFV-1KL-1KlasseNordReserve","BFV-1KL-1KlasseMitteReserve","BFV-1KL-1KlasseSuedReserve",
-          "BFV-2KL-2N","BFV-2Klassen-2KlasseMitte","BFV-2Klasse-2KlasseSuedA","BFV-2Klasse-2KlasseSuedB","BFV-2KL-2KlasseSuedC",
-            "BFV-2KL-2KlasseNordReserve","BFV-2KL-2KlasseSuedAReserve","BFV-2KL-2KlasseSuedBReserve","BFV-2KL-2KlasseMitteReserve","BFV-2KL-2KlasseSuedCReserve"
-          ]
+    leagues = [  # "BFV-NeuerEintrag-RegionalligaOst","BFV-Regionalliga-RegionalligaOst",
+        # "BFV-BVZBurgenlandliga-BVZBurgenlandliga","BFV-BL-BurgenlandligaReserve",
+        "BFV-Burgenlandliga-BurgenlandligaReserve",
+        "BFV-IILigen-IILigaNord", "BFV-IILiga-IILigaMitte", "BFV-IILigen-IILigaSued",
+        "BFV-IILiga-IILigaNordReserve", "BFV-IILiga-IILigaMitteReserve", "BFV-IILiga-IILigaSuedReserve",
+        "BFV-1Klassen-1KlasseNord/Spielplan", "BFV-1Klasse-1Mitte", "BFV-1Klassen-1KlasseSuedB",
+        "BFV-1KL-1KlasseNordReserve", "BFV-1KL-1KlasseMitteReserve", "BFV-1KL-1KlasseSuedReserve",
+        "BFV-2KL-2N", "BFV-2Klassen-2KlasseMitte", "BFV-2Klasse-2KlasseSuedA", "BFV-2Klasse-2KlasseSuedB",
+        "BFV-2KL-2KlasseSuedC",
+        "BFV-2KL-2KlasseNordReserve", "BFV-2KL-2KlasseSuedAReserve", "BFV-2KL-2KlasseSuedBReserve",
+        "BFV-2KL-2KlasseMitteReserve", "BFV-2KL-2KlasseSuedCReserve"
+    ]
     matches=set()
     # Match finder Thread:
     # Find matches to scrape and write to database
@@ -140,6 +143,11 @@ if __name__ == "__main__":
                 sys.exit()
             except:
                 print(traceback.format_exc())
+            with open('matches.pickle', 'wb') as handle:
+                pickle.dump(matches, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            with open('matches.pickle', 'rb') as handle:
+                matches = pickle.load(handle)
+
         print(matches)
 
     print("DONE")
