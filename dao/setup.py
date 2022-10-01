@@ -33,6 +33,14 @@ class MatchPlayer(Base):
     #substitution_minute = Column(Integer, nullable=True)
     #substitution_player= Column(Integer, ForeignKey('players.id'),nullable=True)
 
+class Trainer(Base):
+    __tablename__ = "trainers"
+    id = Column(Integer, primary_key=True)
+    name = Column(String,unique=True)
+
+    #home_matches = relationship('Match',  back_populates='trainers', foreign_keys="[Match.home_team_trainer_id]")
+    #away_matches = relationship('Match', back_populates='trainers', foreign_keys="[Match.away_team_trainer_id]")
+
 class Player(Base):
     __tablename__ = "players"
     id = Column(Integer, primary_key=True)
@@ -55,13 +63,13 @@ class Match(Base):
 
     away_team_id=Column(ForeignKey('teams.id'))
     away_team = relationship("Team",  foreign_keys="[Match.away_team_id]",back_populates='away_matches')
-    away_team_trainer_id = Column(ForeignKey('players.id'))
-    away_team_trainer = relationship("Player", back_populates="matches", foreign_keys="[Match.away_team_trainer_id]")
+    away_team_trainer_id = Column(ForeignKey('trainers.id'))
+    away_team_trainer = relationship("Trainer",  foreign_keys="[Match.away_team_trainer_id]")
 
     home_team_id = Column(ForeignKey('teams.id'))
     home_team = relationship("Team",  foreign_keys="[Match.home_team_id]",back_populates='home_matches')
-    home_team_trainer_id = Column(ForeignKey('players.id'))
-    home_team_trainer = relationship("Player", back_populates="matches", foreign_keys="[Match.home_team_trainer_id]")
+    home_team_trainer_id = Column(ForeignKey('trainers.id'))
+    home_team_trainer = relationship("Trainer",  foreign_keys="[Match.home_team_trainer_id]")
 
     players = relationship('MatchPlayer')  # ,lazy='subquery')
     activities = relationship('MatchActivity')
