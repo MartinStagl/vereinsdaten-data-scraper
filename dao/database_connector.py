@@ -53,3 +53,7 @@ def get_or_insert_match(url):
         match = Match()
         match.url = url
     return match
+
+def get_matches():
+    matches = session.query(Match.url)
+    return set(matches)
