@@ -98,7 +98,7 @@ if __name__ == "__main__":
     log=lg.initLogger()
 
     #start_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/BFV-2KL-2N/Spielplan/aktuell/{}"
-    base_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/{}"
+    base_url="https://www.oefb.at/bewerbe/Spiel/Aufstellung/{}"
     leagues = [   "BFV-NeuerEintrag-RegionalligaOst","BFV-Regionalliga-RegionalligaOst",
         "BFV-BVZBurgenlandliga-BVZBurgenlandliga","BFV-BL-BurgenlandligaReserve",
         "BFV-Burgenlandliga-BurgenlandligaReserve",
