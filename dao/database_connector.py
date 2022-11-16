@@ -26,6 +26,13 @@ def insert_teams(home_team:Team,away_team:Team):
     session.commit()
     session.add(away_team)
     session.commit()
+
+def get_or_insert_match_player(match_id,player_id,team_id):
+    player = session.query(MatchPlayer).filter_by(match_id=match_id,player_id=player_id,team_id=team_id).first()
+    if not player:
+        player = MatchPlayer()
+    return player
+
 def get_or_insert_player(url):
     player = session.query(Player).filter_by(url=url).first()
     if not player:
@@ -56,4 +63,10 @@ def get_or_insert_match(url):
 
 def get_matches():
     matches = session.query(Match.url)
-    return set(matches)
+    return set([str(r).replace("Aufstellung","Spielbericht") for r, in matches])
+    
+def get_last_match():
+    match = session.query(Match).order_by(Match.id.desc()).first()
+    if not match:
+        return 0
+    return match.id

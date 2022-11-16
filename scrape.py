@@ -6,7 +6,7 @@ import traceback
 from dao.setup import *
 import dao.database_connector as dbc
 import sys
-
+import utils.logger as lg
 from datetime import datetime
 
 def to_database(data):
@@ -14,12 +14,13 @@ def to_database(data):
     m.date = datetime.strptime(data["date"], "%d.%m.%Y")
     m.starttime = data["starttime"]
     m.league = data["league"]
+    m.verband = data["verband"]
     m.round = data["round"]
     m.result = data["result"]
 
     home_team=dbc.get_or_insert_team(data["home_team_name"])
     away_team=dbc.get_or_insert_team(data["away_team_name"])
-
+    
     home_team_trainer = dbc.get_or_insert_trainer(data["home_team_trainer"])
     away_team_trainer = dbc.get_or_insert_trainer(data["away_team_trainer"])
 
@@ -32,7 +33,7 @@ def to_database(data):
         p.name= player["name"]
         #p.birthyear=player["birthyear"]
         #p.nationality = player["nationality"]
-        mp=MatchPlayer()
+        mp=dbc.get_or_insert_match_player(match_id=m.id,player_id=p.id,team_id=home_team.id)
         mp.player=p
         mp.goals=player["goals"]
         mp.position = player["position"]
@@ -55,7 +56,7 @@ def to_database(data):
         p.name= player["name"]
         #p.birthyear=player["birthyear"]
         #p.nationality = player["nationality"]
-        mp=MatchPlayer()
+        mp=dbc.get_or_insert_match_player(match_id=m.id,player_id=p.id,team_id=away_team.id)
         mp.player=p
         mp.goals=player["goals"]
         mp.position = player["position"]
@@ -93,10 +94,13 @@ def to_database(data):
 
 
 if __name__ == "__main__":
+
+    log=lg.initLogger()
+
     #start_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/BFV-2KL-2N/Spielplan/aktuell/{}"
-    base_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/{}/Spielplan/aktuell/{}"
-    leagues = [  # "BFV-NeuerEintrag-RegionalligaOst","BFV-Regionalliga-RegionalligaOst",
-        # "BFV-BVZBurgenlandliga-BVZBurgenlandliga","BFV-BL-BurgenlandligaReserve",
+    base_url="https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/{}"
+    leagues = [   "BFV-NeuerEintrag-RegionalligaOst","BFV-Regionalliga-RegionalligaOst",
+        "BFV-BVZBurgenlandliga-BVZBurgenlandliga","BFV-BL-BurgenlandligaReserve",
         "BFV-Burgenlandliga-BurgenlandligaReserve",
         "BFV-IILigen-IILigaNord", "BFV-IILiga-IILigaMitte", "BFV-IILigen-IILigaSued",
         "BFV-IILiga-IILigaNordReserve", "BFV-IILiga-IILigaMitteReserve", "BFV-IILiga-IILigaSuedReserve",
@@ -108,8 +112,7 @@ if __name__ == "__main__":
         "BFV-2KL-2KlasseMitteReserve", "BFV-2KL-2KlasseSuedCReserve"
     ]
     matches=set()
-    # Match finder Thread:
-    # Find matches to scrape and write to database
+
 
     options = webdriver.FirefoxOptions()
     options.add_argument('--ignore-certificate-errors')
@@ -123,37 +126,38 @@ if __name__ == "__main__":
     # Match data scraper Thread
     # Scrape Data from Matches and save to Database
     years=["2021","2020","2019","2018","2017","2016","2015","2014","2013","2012","2011","2010","2022"]
-    for league in leagues:
-        for year in years:
+    
+    driver = webdriver.Firefox(options=options)
+    league_urls=set()
+    #for league in leagues:
+    #    try:
+    #        league_urls.update(MatchFinder(driver,url='https://www.bfv.at/Portal/Spielbetrieb/Ergeb-Tabellen/{}/Spielplan'.format(league)).getLeagueUrls())
+    #    except:
+    #        log.info(traceback.format_exc())
+    #log.info("Fetches {} leagues from BFV".format(len(league_urls)))
+    match_id=dbc.get_last_match()
+    try:            
+        for match_url_id in range(match_id,3200000):
             try:
                 driver = webdriver.Firefox(options=options)
-                matches.update(MatchFinder(driver,base_url.format(league,year)).getMatches())
+                #matches=set()
+                #matches.update(MatchFinder(driver,base_url.format(league_url.replace("Tabelle","Spielplan"))).getMatches())
+                #matches_in_db=dbc.get_matches()
+                #temp_set=matches-matches_in_db
+                #log.info(len(temp_set))
+                #for url in temp_set:
+                    
+                #driver = webdriver.Firefox(options=options)
+                url=base_url.format(match_url_id)
+                data={}
+                data=MatchScraper(driver, url).get_formation()
+                data.update(MatchScraper(driver,url).get_activities())
+                to_database(data)
                 driver.close()
-                temp_set=matches-dbc.get_matches()
-                print(len(temp_set))
-                for url in temp_set:
-                    try:
-                        driver = webdriver.Firefox(options=options)
-                        data={}
-                        data=MatchScraper(driver, url).get_formation()
-                        data.update(MatchScraper(driver,url).get_activities())
-                        to_database(data)
-                        driver.close()
-                        matches.remove(url)
-                    except KeyboardInterrupt:
-                        sys.exit()
-                    except:
-                        print(traceback.format_exc())
-                print("Successfully found {} matches".format(len(matches)))
-            except KeyboardInterrupt:
-                sys.exit()
+                driver.quit()
             except:
-                print(traceback.format_exc())
-            with open('matches.pickle', 'wb') as handle:
-                pickle.dump(matches, handle, protocol=pickle.HIGHEST_PROTOCOL)
-            with open('matches.pickle', 'rb') as handle:
-                matches = pickle.load(handle)
-
-        print(matches)
-
-    print("DONE")
+                log.info(traceback.format_exc())
+    except:
+        log.info(traceback.format_exc())
+    log.info("DONE with scrapeing {}".format(len(dbc.get_matches())))
+    driver.close()

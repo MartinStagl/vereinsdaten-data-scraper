@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey,Boolean, Date
+from sqlalchemy import UniqueConstraint, create_engine, Column, Integer, String, ForeignKey,Boolean, Date
 from sqlalchemy.orm import declarative_base, relationship, Session
 
 
@@ -19,6 +19,8 @@ class MatchPlayer(Base):
     player_id = Column(ForeignKey('players.id'))
     match_id = Column(ForeignKey('matches.id'))
     team_id = Column(ForeignKey('teams.id'))
+
+    UniqueConstraint(player_id,match_id,team_id, name='idx_match_player')
 
 
     player = relationship("Player", back_populates="matches", foreign_keys="[MatchPlayer.player_id]")
@@ -58,6 +60,7 @@ class Match(Base):
     date= Column(Date,nullable=True)
     starttime= Column(String,nullable=True)
     league=Column(String,nullable=True)
+    verband=Column(String,nullable=True)
     round = Column(Integer,nullable=True)
     result= Column(Integer,nullable=True)
 

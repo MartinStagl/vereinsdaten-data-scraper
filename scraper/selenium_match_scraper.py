@@ -72,9 +72,9 @@ class MatchScraper():
 
     driver=None
     url=None
-    def __init__(self,driver,url = 'https://www.oefb.at/bewerbe/Spiel/Aufstellung/3172013/?Sigless-2-Kl-Cup-A-vs-Grosshoeflein-2-N-'):
+    def __init__(self,driver,url = 'https://www.oefb.at/bewerbe/Spiel/Aufstellung/3172013'):
         self.driver=driver
-        self.driver.implicitly_wait(60)
+        self.driver.implicitly_wait(5)
         self.url=url
 
     def get_formation(self,search_term='Aufstellung'):
@@ -93,6 +93,7 @@ class MatchScraper():
         data["url"]=self.driver.current_url
         data["date"] = soup.select('div .date ')[0].text
         data["starttime"] = soup.select('div.detail > div:nth-child(3) > div:nth-child(1) > span:nth-child(2)')[0].text
+        data["verband"] = soup.select('div.detail > div:nth-child(1) > span:nth-child(1)')[0].text
         data["league"] = soup.select('div.detail > div:nth-child(1) > span:nth-child(2)')[0].text
         data["round"] = soup.select('div > div.round')[0].text
         data["result"] = soup.select('.ergebnis')[0].text
